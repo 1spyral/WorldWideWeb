@@ -1,15 +1,16 @@
 import express from "express";
-import cityRoutes from "@routes/cityRoutes";
+import cityRoutes from "./routes/cityRoutes.js";
 
 class App {
-    constructor(store) {
+    constructor() {
         this.app = express();
         this.port = 3000;
-        this.store = store;
-        this.loadRoutes();
+        this.setup();
     }
 
-    loadRoutes() {
+    setup() {
+        this.app.use(express.json());
+
         this.app.use("/city", cityRoutes)
     }
 
@@ -19,3 +20,5 @@ class App {
         })
     }
 }
+
+export default App;

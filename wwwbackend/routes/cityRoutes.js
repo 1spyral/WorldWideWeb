@@ -1,6 +1,13 @@
 import express from "express";
 
+import cityController from "../controllers/cityController.js";
+
 const cityRoutes = express.Router();
 
-cityRoutes.get("/", );
+cityRoutes.get("/", cityController.get);
 
+cityRoutes.delete("/", cityController.generate);
+
+cityRoutes.post("/", cityController.get);
+
+export default cityRoutes;
