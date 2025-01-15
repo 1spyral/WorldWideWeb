@@ -21,19 +21,10 @@ async function get() {
     return cityList;
 }
 
-async function generate({ layers, start } = {
-    layers: 0,
-    start: {
-        city: "Toronto",
-        country: "Canada",
-        coordinates: {
-            lat: 43.65,
-            long: 79.38
-        }
-    }
-}) {
+async function generate(layers, start) {
+    cityList = [];
     cityList.push([start]);
-    grow(layers);
+    await grow(layers);
 
     return cityList;
 }

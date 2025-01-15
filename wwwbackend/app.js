@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import cityRoutes from "./routes/cityRoutes.js";
 
 class App {
@@ -10,6 +11,8 @@ class App {
 
     setup() {
         this.app.use(express.json());
+
+        this.app.use(cors());
 
         this.app.use("/city", cityRoutes)
     }

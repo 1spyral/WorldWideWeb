@@ -5,21 +5,26 @@ async function get(req, res) {
 }
 
 async function generate(req, res) {
-    const { layers = undefined, start = undefined } = req.body;
+    let { layers, start } = req.body;
     
-    let params = {};
-
-    if (layers) {
-        params.layer = layers;
+    if (!layers) {
+        layers = 0;
     }
 
-    if (start) {
-        params.start = start;
-    }
+    if (!start) {
+        start = {
+            city: "Toronto",
+            country: "Canada",
+            coordinates: {
+                lat: 43.65,
+                long: -79.38
+            }
+        }
+    };
 
-    const cities = cityService.generate(params)
-
-    res.json(cities);
+    const cities = await cityService.generate(layers, start);
+    
+    await res.json(cities);
 }
 
 async function grow(req, res) {
