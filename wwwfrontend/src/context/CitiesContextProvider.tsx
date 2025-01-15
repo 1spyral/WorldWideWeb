@@ -10,8 +10,8 @@ interface CitiesContextProviderProps {
 export const CitiesContextProvider = ({ children }: CitiesContextProviderProps) => {
     const [cities, setCities] = useState<City[][]>([]);
 
-    const grow = (newCities: City[]) => {
-        setCities((prevCities) => [...prevCities, newCities]);
+    const grow = (newCities: City[][]) => {
+        setCities((prevCities) => [...prevCities, ...newCities]);
     }
 
     const generate = (cities: City[][]) => {

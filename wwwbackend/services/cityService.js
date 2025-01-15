@@ -29,29 +29,32 @@ async function generate(layers, start) {
     return cityList;
 }
 
-async function grow(layers = 1) {
+async function grow(layers, newLayers = []) {
     if (layers == 0) {
-        return cityList;
+        return;
     }
 
-    let newLayer = [];
+    let layer = [];
 
-    for (let city of cityList[cityList.length - 1]) {   
+    for (let city of cityList[cityList.length - 1]) {
         const completion = await openai.beta.chat.completions.parse({
             model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: `Generate 5 cities that match the user's criteria.`},
-                { role: "user", content: `Close to ${city}`}
+                { role: "user", content: `Close to ${city.city}, ${city.country}`}
             ],
             response_format: citiesSchema
         });
         console.log(completion.choices[0].message.parsed);
-        newLayer.push(...completion.choices[0].message.parsed.cities);
+        layer.push(...completion.choices[0].message.parsed.cities);
     }
 
-    cityList.push(newLayer);
+    cityList.push(layer);
+    newLayers.push(layer);
 
-    return grow(layers - 1);
+    await grow(layers - 1, newLayers);
+
+    return newLayers;
 }
 
 export default {

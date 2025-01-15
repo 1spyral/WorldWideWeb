@@ -8,6 +8,6 @@ cityRoutes.get("/", cityController.get);
 
 cityRoutes.delete("/", cityController.generate);
 
-cityRoutes.post("/", cityController.get);
+cityRoutes.post("/", cityController.grow);
 
 export default cityRoutes;

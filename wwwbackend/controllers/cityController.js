@@ -1,7 +1,9 @@
 import cityService from "../services/cityService.js";
 
 async function get(req, res) {
-    res.json(cityService.get());
+    const response = await cityService.get()
+    
+    await res.json(response);
 }
 
 async function generate(req, res) {
@@ -22,23 +24,21 @@ async function generate(req, res) {
         }
     };
 
-    const cities = await cityService.generate(layers, start);
-    
-    await res.json(cities);
+    const response = await cityService.generate(layers, start)
+
+    await res.json(response);
 }
 
 async function grow(req, res) {
-    const { layers = undefined } = req.body;
+    let { layers } = req.body;
 
-    let cities;
-
-    if (req.body.layers) {
-        cities = cityService.grow(layers);
-    } else {
-        cities = cityService.grow();
+    if (!layers) {
+        layers = 1;
     }
 
-    res.json(cities);
+    const response = await cityService.grow(layers)
+
+    await res.json(response);
 }
 
 export default {
