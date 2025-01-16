@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cityRoutes from "./routes/cityRoutes.js";
+import morgan from "morgan";
 
 class App {
     constructor() {
@@ -13,6 +14,8 @@ class App {
         this.app.use(express.json());
 
         this.app.use(cors());
+
+        this.app.use(morgan("combined"));
 
         this.app.use("/city", cityRoutes)
     }

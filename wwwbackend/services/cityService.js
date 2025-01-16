@@ -37,11 +37,13 @@ async function grow(layers, newLayers = []) {
     let layer = [];
 
     for (let city of cityList[cityList.length - 1]) {
+        const cityName = city => `${city.city}, ${city.country}`
+
         const completion = await openai.beta.chat.completions.parse({
             model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: `Generate 5 cities that match the user's criteria.`},
-                { role: "user", content: `Close to ${city.city}, ${city.country}`}
+                { role: "user", content: `Major cities within 500 km of ${city.city}, ${city.country}. Cities already generated before (don't repeat): ${[...cityList.flat().map(cityName), ...layer.map(cityName)]}`}
             ],
             response_format: citiesSchema
         });
